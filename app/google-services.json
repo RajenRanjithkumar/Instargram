@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "842795394923",
+    "firebase_url": "https://insta-d6a0f-default-rtdb.firebaseio.com",
     "project_id": "insta-d6a0f",
     "storage_bucket": "insta-d6a0f.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "842795394923-cec27k3m00sd7imho7r7m40g7sebfi8g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.restapi.insta",
+            "certificate_hash": "5299565cd600ca6f130b493db374a1f75668e3d4"
+          }
+        },
         {
           "client_id": "842795394923-petko96m8vfev49uni0oaph5lvcu9f1s.apps.googleusercontent.com",
           "client_type": 3
