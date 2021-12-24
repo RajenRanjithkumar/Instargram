@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Insta</string>
+    <string name="forgot_password"><u>Forgot password?</u></string>
 </resources>

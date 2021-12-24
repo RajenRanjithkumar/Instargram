@@ -3,8 +3,11 @@ package com.restapi.insta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +25,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText email, password;
     private Button loginBt;
-    private TextView registerUser;
+    private TextView registerUser, forgotPassword;
     private FirebaseAuth mAuth;
+    private String m_Text = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.loginPassword);
         loginBt = findViewById(R.id.loginButton);
         registerUser = findViewById(R.id.registerUser);
+        forgotPassword = findViewById(R.id.forgotPassword);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -69,6 +74,64 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle("Reset Password?");
+
+                // Set up the input
+                final EditText input = new EditText(LoginActivity.this);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT );
+                input.setHint("Enter your email");
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        m_Text = input.getText().toString();
+                        resetPassword(m_Text);
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+
+
+            }
+        });
+
+    }
+
+    private void resetPassword(String email) {
+
+       mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+           @Override
+           public void onComplete(@NonNull Task<Void> task) {
+
+               if (task.isSuccessful()){
+                   Toast.makeText(LoginActivity.this, "Password reset email sent to \n"+email, Toast.LENGTH_SHORT).show();
+               }
+
+           }
+       }).addOnFailureListener(new OnFailureListener() {
+           @Override
+           public void onFailure(@NonNull Exception e) {
+               Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+           }
+       });
     }
 
     private void loginUser(String email, String password) {
