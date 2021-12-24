@@ -3,6 +3,7 @@ package com.restapi.insta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mRootref;
     private FirebaseAuth mAuth;
 
+    ProgressDialog pd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
         mRootref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
+        pd = new ProgressDialog(this);
+
         loginUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 String txtUsername = username.getText().toString();
                 String txtName = name.getText().toString();
                 String txtEmail = email.getText().toString();
@@ -88,7 +96,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    //final to params
     private void registerUser(String username, String name, String email, String password) {
+
+        pd.setMessage("Please wait");
+        pd.show();
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
@@ -106,6 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
 
                         if (task.isSuccessful()){
+                            pd.dismiss();
                             Toast.makeText(getApplicationContext(), "DB updated", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -121,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
+                pd.dismiss();
                 Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
