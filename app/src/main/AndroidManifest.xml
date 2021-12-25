@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Insta">
         <activity
+            android:name=".PostActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
