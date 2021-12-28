@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                 map.put("name", name);
                 map.put("email", email);
                 map.put("id", mAuth.getCurrentUser().getUid());
-                map.put("boi","Testing");
+                map.put("bio","Testing");
                 map.put("imageurl", "default");
 
                 //add to DB

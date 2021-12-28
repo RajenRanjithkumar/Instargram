@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
             map.put("name", account.getDisplayName());
             map.put("email", account.getEmail());
             map.put("id", account.getId());
-            map.put("boi","Testing");
+            map.put("bio","Testing");
             map.put("imageurl", "default");
 
             //add to DB
