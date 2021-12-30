@@ -194,6 +194,9 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
+
+
+    // Auto complete feature for tags
     @Override
     protected void onStart() {
         super.onStart();
