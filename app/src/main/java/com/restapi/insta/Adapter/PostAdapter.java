@@ -1,6 +1,7 @@
 package com.restapi.insta.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hendraanggrian.appcompat.widget.SocialTextView;
+import com.restapi.insta.CommentActivity;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.Model.User;
 import com.restapi.insta.R;
@@ -89,6 +91,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
         isLiked(post.getPostid(), holder.like);
         noOfLikes(post.getPostid(), holder.noOfLikes);
+        noOfComments(post.getPostid(), holder.noOfComments);
 
         // like feature
         holder.like.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +105,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
                     FirebaseDatabase.getInstance().getReference().child("Likes")
                             .child(post.getPostid()).child(firebaseUser.getUid()).removeValue();
                 }
+
+            }
+        });
+
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postId", post.getPostid());
+                intent.putExtra("authorId", post.getPublisher());
+                mContext.startActivity(intent);
+
+
+            }
+        });
+
+        holder.noOfComments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postId", post.getPostid());
+                intent.putExtra("authorId", post.getPublisher());
+                mContext.startActivity(intent);
 
             }
         });
@@ -151,6 +179,30 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
                 text.setText(dataSnapshot.getChildrenCount()+ "likes");
 
 
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    private void noOfComments (String postId, TextView text){
+
+        FirebaseDatabase.getInstance().getReference().child("Comments").child(postId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(((int) dataSnapshot.getChildrenCount())!= 0 ){
+                    text.setText("View all "+ dataSnapshot.getChildrenCount() + " comments");
+                }else {
+
+                    text.setVisibility(View.INVISIBLE);
+                }
 
             }
 
