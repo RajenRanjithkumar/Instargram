@@ -3,6 +3,8 @@ package com.restapi.insta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,10 +23,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.restapi.insta.Adapter.CommentAdapter;
+import com.restapi.insta.Model.Comment;
 import com.restapi.insta.Model.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,6 +44,11 @@ public class CommentActivity extends AppCompatActivity {
     private String authorId;
 
     FirebaseUser firebaseUser;
+
+    private RecyclerView recyclerView;
+    private CommentAdapter commentAdapter;
+    private List<Comment> commentList;
+
 
 
     @Override
@@ -57,6 +68,23 @@ public class CommentActivity extends AppCompatActivity {
 
             }
         });
+
+
+        recyclerView = findViewById(R.id.recyclerViewComment);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        commentList = new ArrayList<>();
+        commentAdapter = new CommentAdapter(this, commentList);
+
+        recyclerView.setAdapter(commentAdapter);
+
+
+
+
+
+
+
 
         addComment = findViewById(R.id.add_comment);
         imageProfile = findViewById(R.id.image_profile);
@@ -85,6 +113,41 @@ public class CommentActivity extends AppCompatActivity {
 
             }
         });
+
+        getComments();
+
+
+
+
+    }
+
+    private void getComments() {
+
+        FirebaseDatabase.getInstance().getReference().child("Comments").child(postId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                commentList.clear();
+
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+
+                    Comment comment = snapshot.getValue(Comment.class);
+                    commentList.add(comment);
+
+                }
+
+                commentAdapter.notifyDataSetChanged();
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
     }
