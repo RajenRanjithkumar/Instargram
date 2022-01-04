@@ -35,6 +35,7 @@
 
 
                <ImageView
+                   android:id="@+id/optionsBt"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_alignParentEnd="true"
@@ -93,7 +94,7 @@
                             android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20"/>
+                            android:text="0"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -116,7 +117,7 @@
                             android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20"/>
+                            android:text="0"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -140,7 +141,7 @@
                             android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20"/>
+                            android:text="0"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -199,14 +200,14 @@
                 android:orientation="horizontal"
                 android:gravity="center">
 
-                <ImageView
+                <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="?android:attr/buttonBarButtonStyle"
                     android:src="@drawable/ic_my_posts"/>
 
-                <ImageView
+                <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
