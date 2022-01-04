@@ -1,5 +1,6 @@
 package com.restapi.insta.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,7 +45,10 @@ public class ProfileFragment extends Fragment {
     private ImageButton myPosts, savedPosts;
     private FirebaseUser firebaseUser;
 
+    private Button editProfile;
+
     String profileId;
+
 
 
     @Override
@@ -53,7 +58,18 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        profileId = firebaseUser.getUid();
+
+
+        // check and get other users details
+        String data = getContext().getSharedPreferences("Profile", Context.MODE_PRIVATE).getString("publisherId", "none");
+        if (data.equals("none"))
+        {
+            profileId = firebaseUser.getUid();
+        }else {
+
+            profileId = data;
+
+        }
 
         imageProfile = view.findViewById(R.id.profileImage);
         options = view.findViewById(R.id.optionsBt);
@@ -63,6 +79,7 @@ public class ProfileFragment extends Fragment {
         fullname = view.findViewById(R.id.actualName);
         bio = view.findViewById(R.id.bio);
         username = view.findViewById(R.id.profile_username);
+        editProfile = view.findViewById(R.id.editProfileBt);
 
 
         userInfo();
@@ -71,7 +88,88 @@ public class ProfileFragment extends Fragment {
 
         getPostCount();
 
+        // set functions to edit profile button
+        if(profileId.equals(firebaseUser.getUid())){
+
+            editProfile.setText("Edit profile");
+        }else {
+
+            checkFollowingStatus();
+        }
+
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String btText = editProfile.getText().toString();
+
+                if(btText.equals("Edit Profile")){
+
+                    // Goto edit profile activity
+                }else {
+
+                    if (btText.equals("Follow")){
+
+                        FirebaseDatabase.getInstance().getReference().child("Follow")
+                                .child(firebaseUser.getUid()).child("following")
+                                .child(profileId).setValue(true);
+
+
+                        FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId)
+                                .child("followers").child(firebaseUser.getUid()).setValue(true);
+
+                    } else {
+
+                        // the user is already following
+
+                        FirebaseDatabase.getInstance().getReference().child("Follow")
+                                .child(firebaseUser.getUid()).child("following")
+                                .child(profileId).removeValue();
+
+
+                        FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId)
+                                .child("followers").child(firebaseUser.getUid()).removeValue();
+
+
+                    }
+
+
+                }
+
+
+            }
+        });
+
+
+
+
         return view;
+    }
+
+    private void checkFollowingStatus() {
+
+        FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
+                .child("following").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.child(profileId).exists()){
+
+                    editProfile.setText("Following");
+                }else {
+
+                    editProfile.setText("Follow");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     private void getPostCount() {

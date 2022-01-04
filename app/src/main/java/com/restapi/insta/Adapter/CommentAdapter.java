@@ -1,20 +1,27 @@
 package com.restapi.insta.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.restapi.insta.MainActivity;
 import com.restapi.insta.Model.Comment;
 import com.restapi.insta.Model.User;
 import com.restapi.insta.R;
@@ -30,9 +37,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     private List<Comment> mComments;
     private FirebaseUser firebaseUser;
 
-    public CommentAdapter(Context mContext, List<Comment> mComments) {
+    String postId;
+
+    public CommentAdapter(Context mContext, List<Comment> mComments, String postId) {
         this.mContext = mContext;
         this.mComments = mComments;
+        this.postId = postId;
     }
 
 
@@ -74,6 +84,77 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        holder.userComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("publisherId", comment.getPublisher());
+                mContext.startActivity(intent);
+
+            }
+        });
+
+        holder.commentImageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("publisherId", comment.getPublisher());
+                mContext.startActivity(intent);
+
+            }
+        });
+
+
+        //delete comments
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (comment.getPublisher().endsWith(firebaseUser.getUid())){
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
+
+                    alertDialog.setTitle("Delete comment?");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            dialogInterface.dismiss();
+
+                        }
+                    });
+
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            FirebaseDatabase.getInstance().getReference().child("Comments")
+                                    .child(postId).child(comment.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if(task.isSuccessful()){
+
+                                        Toast.makeText(mContext, "Comment deleted successfully", Toast.LENGTH_SHORT).show();
+                                        dialogInterface.dismiss();
+                                    }
+
+                                }
+                            });
+
+                        }
+                    });
+
+                    alertDialog.show();
+                }
+
+                return true;
             }
         });
 
