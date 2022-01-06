@@ -201,6 +201,7 @@
                 android:gravity="center">
 
                 <ImageButton
+                    android:id="@+id/myPosts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -208,6 +209,7 @@
                     android:src="@drawable/ic_my_posts"/>
 
                 <ImageButton
+                    android:id="@+id/mySavedPosts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

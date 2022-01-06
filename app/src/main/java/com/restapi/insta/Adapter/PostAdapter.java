@@ -45,9 +45,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.post_item, parent, false);
 
+        View view = LayoutInflater.from(mContext).inflate(R.layout.post_item, parent, false);
         return new PostAdapter.Viewholder(view);
+
 
     }
 
@@ -92,6 +93,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         isLiked(post.getPostid(), holder.like);
         noOfLikes(post.getPostid(), holder.noOfLikes);
         noOfComments(post.getPostid(), holder.noOfComments);
+        isPostSaved(post.getPostid(), holder.save);
 
         // like feature
         holder.like.setOnClickListener(new View.OnClickListener() {
@@ -136,13 +138,68 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
             }
         });
 
+        holder.save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if(holder.save.getTag().equals("save")){
+
+                    FirebaseDatabase.getInstance().getReference().child("Saves")
+                            .child(firebaseUser.getUid()).child(post.getPostid()).setValue(true);
+
+                }else {
+
+                    FirebaseDatabase.getInstance().getReference().child("Saves")
+                            .child(firebaseUser.getUid()).child(post.getPostid()).removeValue();
+                }
+
+
+
+            }
+        });
+
 
     }
+
+
 
     @Override
     public int getItemCount() {
         return mPost.size();
     }
+
+    private void isPostSaved(String postId, ImageView saveImageBt) {
+
+        FirebaseDatabase.getInstance().getReference().child("Saves")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.child(postId).exists()){
+
+                    saveImageBt.setImageResource(R.drawable.ic_post_saved);
+                    saveImageBt.setTag("saved");
+
+
+                }else {
+
+                    saveImageBt.setImageResource(R.drawable.ic_save);
+                    saveImageBt.setTag("save");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+
 
 
 

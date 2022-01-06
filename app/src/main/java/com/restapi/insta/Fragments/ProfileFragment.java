@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.restapi.insta.Adapter.PhotoAdapter;
+import com.restapi.insta.Adapter.PostAdapter;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.Model.User;
 import com.restapi.insta.R;
@@ -62,6 +63,11 @@ public class ProfileFragment extends Fragment {
     private PhotoAdapter photoAdapter;
     private List<Post> myPostList;
 
+    //for displaying saved posts
+    private RecyclerView recyclerViewSaves;
+    private PhotoAdapter postAdapterSaves;
+    private List<Post> mySavedPosts;
+
 
 
     @Override
@@ -93,6 +99,8 @@ public class ProfileFragment extends Fragment {
         bio = view.findViewById(R.id.bio);
         username = view.findViewById(R.id.profile_username);
         editProfile = view.findViewById(R.id.editProfileBt);
+        myPosts = view.findViewById(R.id.myPosts);
+        savedPosts = view.findViewById(R.id.mySavedPosts);
 
         recyclerView = view.findViewById(R.id.profileRecyclerViewPosts);
         recyclerView.setHasFixedSize(true);
@@ -102,12 +110,25 @@ public class ProfileFragment extends Fragment {
         recyclerView.setAdapter(photoAdapter);
 
 
+        //saved posts
+
+        recyclerViewSaves = view.findViewById(R.id.profileRecyclerViewSaved);
+        recyclerViewSaves.setHasFixedSize(true);
+        recyclerViewSaves.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mySavedPosts = new ArrayList<>();
+        postAdapterSaves = new PhotoAdapter(getContext(), mySavedPosts);
+        recyclerViewSaves.setAdapter(postAdapterSaves);
+
+
+
         userInfo();
 
         getFollowersAndFollowingCount();
 
         getPostCount();
         getMyPosts();
+        getSavedPosts();
+
 
         // set functions to edit profile button
         if(profileId.equals(firebaseUser.getUid())){
@@ -162,9 +183,88 @@ public class ProfileFragment extends Fragment {
         });
 
 
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerViewSaves.setVisibility(View.GONE);
+
+        myPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                recyclerView.setVisibility(View.VISIBLE);
+                recyclerViewSaves.setVisibility(View.GONE);
+
+            }
+        });
+
+        savedPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                recyclerView.setVisibility(View.GONE);
+                recyclerViewSaves.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+
 
 
         return view;
+    }
+
+    private void getSavedPosts() {
+
+        List<String> savedIds = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("Saves").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+
+                    savedIds.add(snapshot.getKey());
+
+                }
+
+                FirebaseDatabase.getInstance().getReference().child("Posts").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+
+                        mySavedPosts.clear();
+                        for (DataSnapshot snapshot: dataSnapshot1.getChildren()){
+
+                            Post post = snapshot.getValue(Post.class);
+
+                            for (String id: savedIds){
+
+                                if (post.getPostid().equals(id)){
+
+                                    mySavedPosts.add(post);
+                                }
+                            }
+
+
+                        }
+
+                        postAdapterSaves.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
     private void getMyPosts() {
