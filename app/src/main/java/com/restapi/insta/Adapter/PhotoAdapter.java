@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.restapi.insta.Fragments.postDetailFragment;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.R;
 import com.squareup.picasso.Picasso;
@@ -38,6 +41,19 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
         Post post = mPosts.get(position);
         Picasso.get().load(post.getImageUrl()).placeholder(R.mipmap.ic_launcher).into(holder.postImage);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(mContext, ""+ holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
+                mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit().putInt("postPosition", holder.getAdapterPosition()).apply();
+
+                // fragment to fragment call
+                ((FragmentActivity)mContext).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new postDetailFragment()).commit();
+            }
+        });
 
 
     }

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hendraanggrian.appcompat.widget.SocialTextView;
 import com.restapi.insta.CommentActivity;
+import com.restapi.insta.Fragments.ProfileFragment;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.Model.User;
 import com.restapi.insta.R;
@@ -159,6 +161,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
             }
         });
 
+
+        /*holder.imageProfle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mContext.getSharedPreferences("Profile",Context.MODE_PRIVATE)
+                        .edit().putString("publisherId", post.getPublisher()).apply();
+
+                ((FragmentActivity)mContext).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new ProfileFragment()).commit();
+
+            }
+        });
+
+
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mContext.getSharedPreferences("Profile",Context.MODE_PRIVATE)
+                        .edit().putString("publisherId", post.getPublisher()).apply();
+
+                ((FragmentActivity)mContext).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new ProfileFragment()).commit();
+
+            }
+        });*/
 
     }
 

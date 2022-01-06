@@ -50,6 +50,7 @@ public class ProfileFragment extends Fragment {
     private TextView fullname;
     private TextView bio;
     private TextView username;
+    private TextView postListEmpty;
 
     private ImageButton myPosts, savedPosts;
     private FirebaseUser firebaseUser;
@@ -81,14 +82,16 @@ public class ProfileFragment extends Fragment {
 
         // check and get other users details
         String data = getContext().getSharedPreferences("Profile", Context.MODE_PRIVATE).getString("publisherId", "none");
+        Toast.makeText(getContext(), "404"+data, Toast.LENGTH_SHORT).show();
         if (data.equals("none"))
         {
             profileId = firebaseUser.getUid();
         }else {
 
             profileId = data;
-
         }
+
+
 
         imageProfile = view.findViewById(R.id.profileImage);
         options = view.findViewById(R.id.optionsBt);
@@ -101,7 +104,9 @@ public class ProfileFragment extends Fragment {
         editProfile = view.findViewById(R.id.editProfileBt);
         myPosts = view.findViewById(R.id.myPosts);
         savedPosts = view.findViewById(R.id.mySavedPosts);
+        postListEmpty = view.findViewById(R.id.postListEmpty);
 
+        // Uploaded posts
         recyclerView = view.findViewById(R.id.profileRecyclerViewPosts);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -119,6 +124,7 @@ public class ProfileFragment extends Fragment {
         postAdapterSaves = new PhotoAdapter(getContext(), mySavedPosts);
         recyclerViewSaves.setAdapter(postAdapterSaves);
 
+        postListEmpty.setVisibility(View.INVISIBLE);
 
 
         userInfo();
@@ -192,6 +198,15 @@ public class ProfileFragment extends Fragment {
 
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerViewSaves.setVisibility(View.GONE);
+                myPosts.setImageResource(R.drawable.ic_my_posts);
+                savedPosts.setImageResource(R.drawable.ic_save);
+
+                if (myPostList.isEmpty()){
+
+                    postListEmpty.setVisibility(View.VISIBLE);
+                }else {
+                    postListEmpty.setVisibility(View.INVISIBLE);
+                }
 
             }
         });
@@ -202,6 +217,15 @@ public class ProfileFragment extends Fragment {
 
                 recyclerView.setVisibility(View.GONE);
                 recyclerViewSaves.setVisibility(View.VISIBLE);
+                myPosts.setImageResource(R.drawable.ic_post_uncheck);
+                savedPosts.setImageResource(R.drawable.ic_post_saved);
+
+                if (mySavedPosts.isEmpty()){
+
+                    postListEmpty.setVisibility(View.VISIBLE);
+                }else {
+                    postListEmpty.setVisibility(View.INVISIBLE);
+                }
 
             }
         });
@@ -247,6 +271,9 @@ public class ProfileFragment extends Fragment {
 
                         postAdapterSaves.notifyDataSetChanged();
 
+
+
+
                     }
 
                     @Override
@@ -285,7 +312,15 @@ public class ProfileFragment extends Fragment {
                 }
 
                 Collections.reverse(myPostList);
+
+
                 photoAdapter.notifyDataSetChanged();
+
+                if (myPostList.isEmpty()){
+
+                    postListEmpty.setVisibility(View.VISIBLE);
+                }
+
 
             }
 
