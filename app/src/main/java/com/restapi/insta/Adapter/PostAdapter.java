@@ -169,45 +169,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
             @Override
             public void onClick(View view) {
 
-               //mContext.getSharedPreferences("Profile",Context.MODE_PRIVATE)
-                      //  .edit().putString("publisherId", post.getPublisher()).apply();
-
-                mContext.getSharedPreferences("ProfileOther",Context.MODE_PRIVATE)
-                        .edit().putString("publisherID", post.getPublisher()).apply();
-
-
-
-
-
-                ((FragmentActivity)mContext).getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new OtherUserFragment())
-                        .commit();
-
-
-
-
-
-
-
+                intend(post);
 
             }
         });
 
 
-        /*holder.username.setOnClickListener(new View.OnClickListener() {
+        holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                mContext.getSharedPreferences("Profile",Context.MODE_PRIVATE)
-                        .edit().putString("publisherId", post.getPublisher()).apply();
-
-                ((FragmentActivity)mContext).getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new ProfileFragment()).commit();
+                intend(post);
 
             }
-        });*/
+        });
 
     }
 
@@ -244,6 +219,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
             }
         });
+
+
+    }
+
+    private void intend(Post post){
+
+        if (post.getPublisher().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+            ((FragmentActivity)mContext).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ProfileFragment())
+                    .commit();
+
+
+
+        }else {
+
+            mContext.getSharedPreferences("ProfileOther",Context.MODE_PRIVATE)
+                    .edit().putString("publisherID", post.getPublisher()).apply();
+
+            ((FragmentActivity)mContext).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new OtherUserFragment())
+                    .commit();
+
+        }
 
 
     }

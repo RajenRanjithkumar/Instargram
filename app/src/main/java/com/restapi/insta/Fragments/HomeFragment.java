@@ -97,6 +97,7 @@ public class HomeFragment extends Fragment {
                    followingList.add(snapshot.getKey());
 
                 }
+                followingList.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                 //once we get the following list, get their posts
 

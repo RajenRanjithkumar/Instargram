@@ -1,6 +1,7 @@
 package com.restapi.insta.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.restapi.insta.Adapter.PhotoAdapter;
 import com.restapi.insta.Adapter.PostAdapter;
+import com.restapi.insta.EditProfileActivity;
+import com.restapi.insta.MainActivity;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.Model.User;
 import com.restapi.insta.R;
@@ -93,7 +96,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-        Toast.makeText(getContext(), "current user ID:\n"+data, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "current user ID:\n"+data, Toast.LENGTH_SHORT).show();
 
         if (data.equals("none"))
         {
@@ -167,12 +170,24 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity( intent);
+
+                /*
                 String btText = editProfile.getText().toString();
 
                 if(btText.equals("Edit Profile")){
 
                     // Goto edit profile activity
-                }else {
+
+
+
+
+                }
+
+                else {
 
                     if (btText.equals("Follow")){
 
@@ -202,7 +217,7 @@ public class ProfileFragment extends Fragment {
 
                 }
 
-
+                */
             }
         });
 
