@@ -54,6 +54,8 @@ public class postDetailFragment extends Fragment {
         recyclerView = view.findViewById(R.id.myPostsDetailedRv);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        //fix this
         profileId = firebaseUser.getUid();
         LinearSmoothScroller smoothScroller=new LinearSmoothScroller(getContext()){
             @Override

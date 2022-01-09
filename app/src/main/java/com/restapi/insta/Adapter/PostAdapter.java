@@ -2,6 +2,7 @@ package com.restapi.insta.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hendraanggrian.appcompat.widget.SocialTextView;
 import com.restapi.insta.CommentActivity;
+import com.restapi.insta.Fragments.OtherUserFragment;
 import com.restapi.insta.Fragments.ProfileFragment;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.Model.User;
@@ -162,22 +165,37 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         });
 
 
-        /*holder.imageProfle.setOnClickListener(new View.OnClickListener() {
+        holder.imageProfle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                mContext.getSharedPreferences("Profile",Context.MODE_PRIVATE)
-                        .edit().putString("publisherId", post.getPublisher()).apply();
+               //mContext.getSharedPreferences("Profile",Context.MODE_PRIVATE)
+                      //  .edit().putString("publisherId", post.getPublisher()).apply();
+
+                mContext.getSharedPreferences("ProfileOther",Context.MODE_PRIVATE)
+                        .edit().putString("publisherID", post.getPublisher()).apply();
+
+
+
+
 
                 ((FragmentActivity)mContext).getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, new ProfileFragment()).commit();
+                        .replace(R.id.fragment_container, new OtherUserFragment())
+                        .commit();
+
+
+
+
+
+
+
 
             }
         });
 
 
-        holder.username.setOnClickListener(new View.OnClickListener() {
+        /*holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

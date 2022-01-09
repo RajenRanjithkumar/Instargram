@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseUser;
 import com.restapi.insta.Fragments.HomeFragment;
 import com.restapi.insta.Fragments.NotificationFragment;
 import com.restapi.insta.Fragments.ProfileFragment;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private Fragment selectorFragment;
+    private FirebaseUser currentFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         if (intent!= null){
 
             // how we pass values from activities to fragments
+
             String profileId = intent.getString("publisherId");
             getSharedPreferences("Profile", MODE_PRIVATE).edit().putString("publisherId", profileId).apply();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();

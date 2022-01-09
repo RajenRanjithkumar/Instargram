@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.dynamic.FragmentWrapper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,7 +60,7 @@ public class ProfileFragment extends Fragment {
 
     private Button editProfile;
 
-    String profileId;
+    private String profileId;
 
     //for displaying our posts
     private RecyclerView recyclerView;
@@ -68,6 +71,8 @@ public class ProfileFragment extends Fragment {
     private RecyclerView recyclerViewSaves;
     private PhotoAdapter postAdapterSaves;
     private List<Post> mySavedPosts;
+    private String data;
+    private String fromHomeFrag, fromHomeFrag1 = "false";
 
 
 
@@ -77,19 +82,32 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         // check and get other users details
-        String data = getContext().getSharedPreferences("Profile", Context.MODE_PRIVATE).getString("publisherId", "none");
-        Toast.makeText(getContext(), "404"+data, Toast.LENGTH_SHORT).show();
+        data = getContext().getSharedPreferences("Profile", Context.MODE_PRIVATE)
+                .getString("publisherId", "none");
+
+
+
+
+        Toast.makeText(getContext(), "current user ID:\n"+data, Toast.LENGTH_SHORT).show();
+
         if (data.equals("none"))
         {
             profileId = firebaseUser.getUid();
-        }else {
+            data = "none";
+
+        }
+        else {
 
             profileId = data;
+            data = "none";
+
         }
+
 
 
 
@@ -233,6 +251,8 @@ public class ProfileFragment extends Fragment {
 
 
 
+
+
         return view;
     }
 
@@ -292,7 +312,12 @@ public class ProfileFragment extends Fragment {
 
 
 
+
+
+
     }
+
+
 
     private void getMyPosts() {
 
