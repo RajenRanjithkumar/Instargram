@@ -40,6 +40,7 @@ public class postDetailFragment extends Fragment {
     String profileId;
     private FirebaseUser firebaseUser;
     private LinearLayoutManager linearLayoutManager;
+    private String userType;
 
 
     @Override
@@ -48,15 +49,28 @@ public class postDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_post_detail, container, false);
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         postPosition = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getInt("postPosition", 0);
         Toast.makeText(getContext(), ""+postPosition, Toast.LENGTH_SHORT).show();
 
+        userType = getContext().getSharedPreferences("userType", Context.MODE_PRIVATE).getString("postPublisher", firebaseUser.getUid());
+
         recyclerView = view.findViewById(R.id.myPostsDetailedRv);
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //profileId = userType;
 
-        //fix this
-        profileId = firebaseUser.getUid();
+        if (!userType.equals(firebaseUser.getUid())){
+
+            profileId = userType;
+        }else {
+
+            profileId = firebaseUser.getUid();
+        }
+
+
+
+
         LinearSmoothScroller smoothScroller=new LinearSmoothScroller(getContext()){
             @Override
             protected int getVerticalSnapPreference() {

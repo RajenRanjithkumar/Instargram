@@ -23,9 +23,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     private Context mContext;
     private List<Post> mPosts;
 
+
     public PhotoAdapter(Context mContext, List<Post> mPosts) {
         this.mContext = mContext;
         this.mPosts = mPosts;
+
     }
 
     @NonNull
@@ -47,6 +49,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
                 //Toast.makeText(mContext, ""+ holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
 
                 mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit().putInt("postPosition", holder.getAdapterPosition()).apply();
+                mContext.getSharedPreferences("userType", Context.MODE_PRIVATE).edit().putString("postPublisher", post.getPublisher()).apply();
+
 
                 // fragment to fragment call
                 ((FragmentActivity)mContext).getSupportFragmentManager()
