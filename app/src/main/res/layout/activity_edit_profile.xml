@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditProfileActivity"
-    android:background="#D5D4D4">
+    android:background="#A8EFEFEF">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -84,6 +84,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
+
                     android:src="@drawable/ic_add_image"/>
 
                 <TextView

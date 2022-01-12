@@ -60,7 +60,7 @@
             android:id="@+id/addImage"
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher"/>
         <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
             android:layout_margin="10dp"

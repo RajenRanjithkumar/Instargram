@@ -29,6 +29,7 @@ import com.restapi.insta.Model.User;
 import com.restapi.insta.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
@@ -108,6 +109,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
                 if(holder.like.getTag().equals("like")){
                     FirebaseDatabase.getInstance().getReference().child("Likes")
                             .child(post.getPostid()).child(firebaseUser.getUid()).setValue(true);
+
+                    // add notification
+                    addNotification(post.getPostid(), post.getPublisher());
+
                 }else {
                     FirebaseDatabase.getInstance().getReference().child("Likes")
                             .child(post.getPostid()).child(firebaseUser.getUid()).removeValue();
@@ -186,6 +191,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
     }
 
+    private void addNotification(String postId, String publisherId) {
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("userId", publisherId);
+        map.put("text", "Liked your post");
+        map.put("postId", postId);
+        map.put("isPost", "true");
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Notifications")
+                .child(firebaseUser.getUid())
+                .push() // stores in an unique value
+                .setValue(map);
+
+    }
 
 
     @Override

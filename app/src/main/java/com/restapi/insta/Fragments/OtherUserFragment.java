@@ -156,7 +156,8 @@ public class OtherUserFragment extends Fragment {
 
                 User user = dataSnapshot.getValue(User.class);
 
-                if(user.getImageurl().equals("default")){
+                // fix this
+                if(user.getImageurl().equals("default") || user.getImageurl().equals(null )){
 
                     imageProfile.setImageResource(R.mipmap.ic_launcher);
                 }else {
