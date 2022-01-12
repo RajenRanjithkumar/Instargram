@@ -79,7 +79,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 }else {
 
                     mContext.getSharedPreferences("ProfileOther", Context.MODE_PRIVATE)
-                            .edit().putString("publisherID", notification.getPostId()).apply();
+                            .edit().putString("publisherID", notification.getUserId()).apply();
                     //notification.getPostId()
 
                     ((FragmentActivity)mContext).getSupportFragmentManager()

@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.restapi.insta.Adapter.PhotoAdapter;
 import com.restapi.insta.Adapter.PostAdapter;
 import com.restapi.insta.EditProfileActivity;
+import com.restapi.insta.FollowersActivity;
 import com.restapi.insta.MainActivity;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.Model.User;
@@ -259,6 +260,30 @@ public class ProfileFragment extends Fragment {
                 }else {
                     postListEmpty.setVisibility(View.INVISIBLE);
                 }
+
+            }
+        });
+
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id", profileId);
+                intent.putExtra("title", "followers");
+                startActivity(intent);
+
+            }
+        });
+
+        following.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id", profileId);
+                intent.putExtra("title", "following");
+                startActivity(intent);
 
             }
         });

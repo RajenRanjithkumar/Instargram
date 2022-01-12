@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hendraanggrian.appcompat.widget.SocialTextView;
 import com.restapi.insta.CommentActivity;
+import com.restapi.insta.FollowersActivity;
 import com.restapi.insta.Fragments.OtherUserFragment;
 import com.restapi.insta.Fragments.ProfileFragment;
 import com.restapi.insta.Model.Post;
@@ -188,6 +189,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
             }
         });
+
+        holder.noOfLikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(mContext, FollowersActivity.class);
+                intent.putExtra("id", post.getPublisher());
+                intent.putExtra("title", "likes");
+                mContext.startActivity(intent);
+
+            }
+        });
+
 
     }
 

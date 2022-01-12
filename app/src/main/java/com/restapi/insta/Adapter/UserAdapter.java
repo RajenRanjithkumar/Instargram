@@ -1,6 +1,7 @@
 package com.restapi.insta.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,11 +19,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.restapi.insta.Fragments.OtherUserFragment;
+import com.restapi.insta.Fragments.ProfileFragment;
+import com.restapi.insta.MainActivity;
 import com.restapi.insta.Model.User;
 import com.restapi.insta.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -85,6 +91,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                     FirebaseDatabase.getInstance().getReference().child("Follow")
                             .child(user.getId()).child("followers").child(firebaseUser.getUid()).setValue(true);
 
+                    addNotification(user.getId());
+
+
                 }else {
 
                     FirebaseDatabase.getInstance().getReference().child("Follow").child((firebaseUser.getUid()))
@@ -99,6 +108,55 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
             }
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFragment){
+
+                    mContext.getSharedPreferences("ProfileOther", Context.MODE_PRIVATE)
+                            .edit()
+                            .putString("publisherID", user.getId()).apply();
+
+                    ((FragmentActivity)mContext).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new OtherUserFragment())
+                            .commit();
+
+
+                }else {
+
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    intent.putExtra("publisherId", user.getId());
+                    mContext.startActivity(intent);
+
+
+                }
+
+            }
+        });
+
+
+
+
+    }
+
+    private void addNotification(String userId) {
+
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("text", "Started following you");
+        map.put("postId", "");
+        map.put("isPost", "false");
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Notifications")
+                .child(firebaseUser.getUid())
+                .push() // stores in an unique value
+                .setValue(map);
+
+
 
     }
 
