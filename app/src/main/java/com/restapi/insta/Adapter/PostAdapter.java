@@ -207,17 +207,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
     private void addNotification(String postId, String publisherId) {
 
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("userId", publisherId);
-        map.put("text", "Liked your post");
-        map.put("postId", postId);
-        map.put("isPost", "true");
+        if (!publisherId.equals(firebaseUser.getUid())){
 
-        FirebaseDatabase.getInstance().getReference()
-                .child("Notifications")
-                .child(firebaseUser.getUid())
-                .push() // stores in an unique value
-                .setValue(map);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("userId", firebaseUser.getUid());
+            map.put("text", "Liked your post");
+            map.put("postId", postId);
+            map.put("isPost", "true");
+
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Notifications")
+                    .child(publisherId)
+                    .push() // stores in an unique value
+                    .setValue(map);
+
+        }
+
+
 
     }
 
