@@ -35,6 +35,7 @@ import com.restapi.insta.FollowersActivity;
 import com.restapi.insta.MainActivity;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.Model.User;
+import com.restapi.insta.OptionsActivity;
 import com.restapi.insta.R;
 import com.squareup.picasso.Picasso;
 
@@ -283,6 +284,16 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent(getContext(), FollowersActivity.class);
                 intent.putExtra("id", profileId);
                 intent.putExtra("title", "following");
+                startActivity(intent);
+
+            }
+        });
+
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), OptionsActivity.class);
                 startActivity(intent);
 
             }
