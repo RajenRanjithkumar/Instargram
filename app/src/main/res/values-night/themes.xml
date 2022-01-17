@@ -3,8 +3,8 @@
     <style name="Theme.Insta" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
@@ -12,5 +12,28 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+
+    <style name="CustomTheme" parent="android:Theme">
+        <item name="android:src">@drawable/insta_logo_white</item>
+    </style>
+
+    <style name="like" parent="android:Theme">
+        <item name="android:src">@drawable/ic_like</item>
+        <item name="android:tint">@color/white</item>
+
+    </style>
+
+    <style name="comment" parent="android:Theme">
+        <item name="android:src">@drawable/ic_comment</item>
+        <item name="android:tint">@color/white</item>
+
+    </style>
+
+    <style name="save" parent="android:Theme">
+        <item name="android:src">@drawable/ic_save</item>
+        <item name="android:tint">@color/white</item>
+
     </style>
 </resources>

@@ -66,10 +66,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="10dp"
-
         android:layout_marginEnd="10dp"
         android:text="@string/forgot_password"
-        android:textColor="#B0000000" />
+        style="@style/Theme.Insta"/>
 
     <Button
         android:id="@+id/loginButton"

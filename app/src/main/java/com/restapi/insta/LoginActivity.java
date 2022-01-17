@@ -78,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        mGoogleSignInClient.signOut();
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,6 +165,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
     }
 
     private void signIn() {
@@ -213,6 +219,7 @@ public class LoginActivity extends AppCompatActivity {
                             map.put("imageurl", "default");
 
                             Toast.makeText(getApplicationContext(), "Id:\n"+user.getUid(), Toast.LENGTH_SHORT).show();
+                            com.restapi.insta.user.firebaseUser = user.getUid();
 
                             //add to DB
                             mRootref.child("Users").child(user.getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -363,6 +370,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onBackPressed();
 
         Intent intent = new Intent(getApplicationContext(), OpenActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
 

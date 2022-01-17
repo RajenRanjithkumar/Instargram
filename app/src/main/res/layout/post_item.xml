@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Username"
-            android:textColor="@color/black"
+            style="@style/Theme.Insta"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_like"
+            android:theme="@style/like"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_comment"
+            android:theme="@style/comment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/likeBt"
             app:layout_constraintTop_toTopOf="parent">
@@ -105,7 +105,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_save" />
+            android:theme="@style/save" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -125,7 +125,7 @@
         android:layout_below="@id/no_of_likes"
         android:layout_marginStart="12dp"
         android:text="Name"
-        android:textColor="@color/black"
+        style="@style/Theme.Insta"
         android:textStyle="bold" />
 
     <com.hendraanggrian.appcompat.widget.SocialTextView
@@ -135,19 +135,17 @@
         android:layout_below="@+id/author"
         android:layout_marginStart="12dp"
         android:text="Description"
-        android:textColor="@color/black"
-
-        />
+        style="@style/Theme.Insta" />
 
     <TextView
         android:id="@+id/no_0f_comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="no of comments"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp"
         android:layout_below="@id/post_description"
-        android:layout_marginStart="12dp"/>
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="10dp"
+        android:text="no of comments"
+        style="@style/Theme.Insta" />
 
 
 
