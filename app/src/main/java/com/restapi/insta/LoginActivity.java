@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,8 +27,12 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -43,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 0;
+
+    public  String key = "842795394923-petko96m8vfev49uni0oaph5lvcu9f1s.apps.googleusercontent.com";
 
 
 
@@ -63,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         mRootref = FirebaseDatabase.getInstance().getReference();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(key)
                 .requestEmail()
                 .build();
 
@@ -170,8 +179,85 @@ public class LoginActivity extends AppCompatActivity {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+            //handleSignInResult(task);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken(), account);
+
+            } catch (ApiException e) {
+                e.printStackTrace();
+            }
+
+
         }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken, GoogleSignInAccount account) {
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()){
+
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("username", account.getDisplayName());
+                            map.put("name", account.getDisplayName());
+                            map.put("email", account.getEmail());
+                            map.put("id", user.getUid());
+                            map.put("bio","Testing");
+                            map.put("imageurl", "default");
+
+                            Toast.makeText(getApplicationContext(), "Id:\n"+user.getUid(), Toast.LENGTH_SHORT).show();
+
+                            //add to DB
+                            mRootref.child("Users").child(user.getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(getApplicationContext(), "Login successfull!!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity( intent);
+                                        finish();
+
+
+                                    }
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
+
+
+
+
+
+
+
+                        }else {
+                            Toast.makeText(getApplicationContext(), "New Error:\n"+task.getException() , Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+                    }
+                });
+
+
+
+
+
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -272,6 +358,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+
+        Intent intent = new Intent(getApplicationContext(), OpenActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -285,4 +382,5 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
+
 }
