@@ -26,12 +26,12 @@
                    android:id="@+id/profile_username"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="Username"
-                   android:textSize="18sp"
-                   android:maxLines="1"
                    android:layout_centerVertical="true"
-                   android:textStyle="bold"
-                   android:textColor="@color/black"/>
+                   android:maxLines="1"
+                   android:text="Username"
+                   style="@style/text"
+                   android:textSize="18sp"
+                   android:textStyle="bold" />
 
 
                <ImageView
@@ -41,7 +41,7 @@
                    android:layout_alignParentEnd="true"
                    android:layout_centerVertical="true"
                    android:layout_marginEnd="15sp"
-                   android:src="@drawable/ic_options" />
+                   style="@style/menu"/>
            </RelativeLayout>
 
 
@@ -92,13 +92,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="@color/black" />
+                            style="@style/text"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Posts"
-                            android:textColor="@color/black" />
+                            style="@style/text"/>
 
                     </LinearLayout>
 
@@ -115,13 +115,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="@color/black" />
+                            style="@style/text" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Followers"
-                            android:textColor="@color/black" />
+                            style="@style/text" />
 
 
                     </LinearLayout>
@@ -138,13 +138,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="@color/black" />
+                            style="@style/text" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Following"
-                            android:textColor="@color/black" />
+                            style="@style/text"/>
 
 
                     </LinearLayout>
@@ -169,21 +169,22 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="Fullname"
-                    android:textColor="@color/black" />
+                    style="@style/text" />
 
                 <TextView
                     android:id="@+id/bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bio...."
-                    android:textColor="@color/black" />
+                    style="@style/text" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/editProfileBt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/black"
+                style="@style/button"
+
                 android:text="Edit Profile"
                 android:textAllCaps="false" />
 
@@ -195,19 +196,21 @@
 
                 <ImageButton
                     android:id="@+id/myPosts"
-                    style="?android:attr/buttonBarButtonStyle"
+                    style="@style/myPosts"
+                    android:background="?android:attr/windowBackground"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_my_posts" />
+                     />
 
                 <ImageButton
                     android:id="@+id/mySavedPosts"
-                    style="?android:attr/buttonBarButtonStyle"
+                    style="@style/mySavedPosts"
+                    android:background="?android:attr/windowBackground"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_save" />
+                    />
 
 
             </LinearLayout>

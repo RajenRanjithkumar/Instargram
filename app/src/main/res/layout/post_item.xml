@@ -10,7 +10,8 @@
         android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="5dp"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImage"
@@ -26,11 +27,11 @@
 
         <TextView
             android:id="@+id/userName"
+            style="@style/Theme.Insta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Username"
-            style="@style/Theme.Insta"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,12 +54,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mid"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/head">
 
         <ImageView
             android:id="@+id/postImage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+
             android:src="@drawable/ic_instagram_wordmark_black_logo_wine"
             app:layout_constraintDimensionRatio="1:1"
             tools:ignore="MissingConstraints" />

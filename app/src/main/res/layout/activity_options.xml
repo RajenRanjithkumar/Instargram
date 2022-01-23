@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/settings"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        style="@style/text"
         android:textStyle="bold"
         android:layout_margin="10dp"
         />
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="Logout"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        style="@style/text"
         android:textStyle="bold"
         android:layout_margin="10dp"
         />

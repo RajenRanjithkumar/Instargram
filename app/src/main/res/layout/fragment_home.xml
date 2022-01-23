@@ -7,37 +7,39 @@
     tools:context=".Fragments.HomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingTop="5dp"
-        android:id="@+id/bar"
-        android:background="?android:attr/windowBackground">
+        android:background="?android:attr/windowBackground"
+        >
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/toolBar"
             android:background="?android:attr/windowBackground">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:layout_marginTop="5dp">
 
                 <ImageView
+                    style="@style/CustomTheme"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
-                    android:layout_alignParentStart="true"
-                    android:scaleType="center"
-                    style="@style/CustomTheme" />
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="5dp"
+
+                    android:scaleType="center" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_inbox"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    style="@style/message" />
 
 
             </RelativeLayout>

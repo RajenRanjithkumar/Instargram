@@ -36,4 +36,36 @@
         <item name="android:tint">@color/white</item>
 
     </style>
+
+    <style name="text" parent="android:Theme">
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+    <style name="menu" parent="android:Theme">
+        <item name="android:src">@drawable/ic_baseline_menu_24</item>
+    </style>
+
+    <style name="message" parent="android:Theme">
+        <item name="android:src">@drawable/ic_message</item>
+    </style>
+
+
+    <style name="button" parent="android:Theme">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
+
+    <style name="myPosts" parent="android:Theme">
+        <item name="android:src">@drawable/ic_my_posts_white</item>
+    </style>
+
+    <style name="mySavedPosts" parent="android:Theme">
+        <item name="android:src">@drawable/ic_save_white</item>
+    </style>
+
+
+
 </resources>

@@ -22,7 +22,7 @@
         android:layout_marginTop="14dp"
         android:maxLines="1"
         android:text="Username"
-        android:textColor="@color/black"
+        style="@style/text"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/image_profile"
         app:layout_constraintTop_toTopOf="parent" />

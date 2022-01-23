@@ -30,7 +30,7 @@
             android:layout_toStartOf="@id/postImageNoti"
             android:layout_toEndOf="@id/imageProfile"
             android:text="Username"
-            android:textColor="@color/black"
+            style="@style/text"
             android:textSize="18sp"
             android:textStyle="bold" />
 
