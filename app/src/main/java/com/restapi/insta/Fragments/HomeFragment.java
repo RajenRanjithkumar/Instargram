@@ -1,5 +1,6 @@
 package com.restapi.insta.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.restapi.insta.Adapter.PostAdapter;
+import com.restapi.insta.MessageActivity;
 import com.restapi.insta.Model.Post;
 import com.restapi.insta.R;
 
@@ -30,10 +34,10 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerViewPosts;
     private PostAdapter postAdapter;
+    private ImageView messageIcon;
     private List<Post> postList;
 
     private List<String> followingList;
-
 
     private LinearLayoutManager linearLayoutManager;
     Parcelable state;
@@ -44,6 +48,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        messageIcon = view.findViewById(R.id.messageIcon);
 
         recyclerViewPosts = view.findViewById(R.id.recyclerViewPosts);
         recyclerViewPosts.setHasFixedSize(true);
@@ -65,6 +71,19 @@ public class HomeFragment extends Fragment {
 
         checkFollowingUsers();
 
+
+        messageIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), MessageActivity.class);
+                startActivity(intent);
+                //Toast.makeText(getContext(), "Working", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        });
 
         return view;
     }
