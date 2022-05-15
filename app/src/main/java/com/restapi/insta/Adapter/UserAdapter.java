@@ -37,20 +37,26 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     private Context mContext;
     private List<User> mUsers;
     private boolean isFragment;
+    private boolean isMessage;
 
     private FirebaseUser firebaseUser;
 
-    public UserAdapter(Context mContext, List<User> mUsers, boolean isFragment) {
+    public UserAdapter(Context mContext, List<User> mUsers, boolean isFragment, boolean isMessage) {
         this.mContext = mContext;
         this.mUsers = mUsers;
         this.isFragment = isFragment;
+        this.isMessage = isMessage;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(mContext).inflate(R.layout.user_item,parent, false);
+
         return new UserAdapter.ViewHolder(view);
+
+
     }
 
 

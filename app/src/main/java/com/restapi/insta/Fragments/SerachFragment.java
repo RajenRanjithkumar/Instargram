@@ -61,7 +61,7 @@ public class SerachFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mUsers = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(), mUsers, true);
+        userAdapter = new UserAdapter(getContext(), mUsers, true, false);
         recyclerView.setAdapter(userAdapter);
 
         // HashTags rv
