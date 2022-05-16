@@ -1,6 +1,7 @@
 package com.restapi.insta.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.restapi.insta.ChatActivity;
+import com.restapi.insta.MessageActivity;
 import com.restapi.insta.Model.User;
 import com.restapi.insta.R;
 import com.squareup.picasso.Picasso;
@@ -51,6 +54,17 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
         holder.fullname.setText(user.getName());
 
         Picasso.get().load(user.getImageurl()).placeholder(R.mipmap.ic_launcher).into(holder.imageProfile);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(mContext, ChatActivity.class);
+                intent.putExtra("userId", user.getId());
+                mContext.startActivity(intent);
+
+            }
+        });
 
     }
 
