@@ -21,12 +21,18 @@
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable-anydpi/ic_post_saved.xml" value="0.4015625" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable-anydpi/ic_save.xml" value="0.4015625" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable-anydpi/ic_search.xml" value="0.4015625" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/chat_text_bg.xml" value="0.2765" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/circle_backgroung.xml" value="0.2765" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.2765" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.3888888888888889" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_instagram_wordmark_black_logo_wine.xml" value="0.4015625" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_message.xml" value="0.3888888888888889" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_my_posts_white.xml" value="0.3888888888888889" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_save_white.xml" value="0.3888888888888889" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/insta_logo_white.xml" value="0.4015625" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/left_item.xml" value="0.2765" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/right_item.xml" value="0.2765" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_chat.xml" value="0.33" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_comment.xml" value="0.3591485507246377" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_edit_profile.xml" value="0.33" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_followers.xml" value="0.35054347826086957" />
@@ -45,6 +51,8 @@
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_post_detail.xml" value="0.3473731884057971" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_serach.xml" value="0.3854166666666667" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/message_left_item.xml" value="0.3609375" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/message_right_item.xml" value="0.35989583333333336" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/notification_item.xml" value="0.33" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/post_item.xml" value="0.25" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/posts_item.xml" value="0.3555253623188406" />
