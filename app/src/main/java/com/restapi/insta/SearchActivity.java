@@ -16,6 +16,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +36,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private List<User> mUsers;
     private UserSearchAdapter userSearchAdapter;
+    public FirebaseUser firebaseUser;
 
     private TextView userEmpty;
 
@@ -52,6 +55,8 @@ public class SearchActivity extends AppCompatActivity {
             }
 
         });
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         userEmpty = findViewById(R.id.userEmpty);
 
@@ -111,7 +116,14 @@ public class SearchActivity extends AppCompatActivity {
                     mUsers.clear();
                     for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                         User user = snapshot.getValue(User.class);
-                        mUsers.add(user);
+
+                        assert user != null;
+                        if(!user.getId().equals(firebaseUser.getUid())){
+                            mUsers.add(user);
+                        }
+
+
+
                     }
 
                     userSearchAdapter.notifyDataSetChanged();

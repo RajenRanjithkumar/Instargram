@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.restapi.insta.Model.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
@@ -29,9 +34,11 @@ public class ChatActivity extends AppCompatActivity {
     private TextView userName;
     private TextView sendBt;
     private RelativeLayout sendImage;
-    private EditText message;
+    private EditText messageEditText;
 
-    private String userId;
+    private String ReceiverUserId;
+
+
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseRef;
 
@@ -60,22 +67,52 @@ public class ChatActivity extends AppCompatActivity {
         userName = findViewById(R.id.userName);
         sendBt = findViewById(R.id.sendBt);
         sendImage = findViewById(R.id.foot);
-        message = findViewById(R.id.user_message);
+        messageEditText = findViewById(R.id.user_message);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            userId = extras.getString("userId");
+            ReceiverUserId = extras.getString("userId");
             //The key argument here must match that used in the other activity
         }
 
-
-        databaseRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        //
+        databaseRef = FirebaseDatabase.getInstance().getReference().child("Users").child(ReceiverUserId);
 
         userInfo();
 
+        sendImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ChatActivity.this, "Yet to implement", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        sendBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                String message = messageEditText.getText().toString();
+                if(message.isEmpty()){
+
+                    Toast.makeText(ChatActivity.this, "Enter a message...", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    sendMessage(firebaseUser.getUid(), ReceiverUserId, message);
+                    messageEditText.setText("");
+
+                }
+
+
+
+
+            }
+        });
 
     }
 
@@ -99,6 +136,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 userName.setText(user.getUsername());
                 name.setText(user.getName());
+                ReceiverUserId = user.getId();
 
 
             }
@@ -108,6 +146,86 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    private void sendMessage(String senderId, String receiverUserId, String message){
+
+        DatabaseReference databaseReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("Chats");
+
+        // generate unique keys for chat
+        String uniqueId = databaseReference.push().getKey();
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("messageId", uniqueId);
+        map.put("sender", senderId);
+        map.put("receiver", receiverUserId);
+        map.put("message", message);
+        map.put("url", "yet to implement");
+        map.put("isSeen", false);
+
+        databaseReference
+                .child(uniqueId)
+                .setValue(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if(task.isSuccessful()){
+
+                            DatabaseReference chatListSenderRef = FirebaseDatabase
+                                    .getInstance()
+                                    .getReference()
+                                    .child("ChatList")
+                                    .child(firebaseUser.getUid())
+                                    .child(ReceiverUserId);
+
+                            chatListSenderRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                if(!snapshot.exists()){
+
+                                    chatListSenderRef.child("id").setValue(ReceiverUserId);
+
+
+                                    DatabaseReference chatListReceiverRef = FirebaseDatabase
+                                            .getInstance()
+                                            .getReference()
+                                            .child("ChatList")
+                                            .child(ReceiverUserId)
+                                            .child(firebaseUser.getUid());
+
+                                    chatListReceiverRef.child("id").setValue(firebaseUser.getUid());
+
+
+                                }
+
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
+
+
+                        }
+
+                    }
+                });
+
+
+
 
 
     }
