@@ -3,6 +3,8 @@ package com.restapi.insta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -20,10 +22,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.restapi.insta.Adapter.ChatsAdapter;
+import com.restapi.insta.Model.Chat;
 import com.restapi.insta.Model.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,9 +44,15 @@ public class ChatActivity extends AppCompatActivity {
 
     private String ReceiverUserId;
 
+    private DatabaseReference databaseReference;
+
 
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseRef;
+
+    private RecyclerView recyclerView;
+    private ChatsAdapter chatsAdapter;
+    private List<Chat> chatList;
 
 
     @Override
@@ -59,8 +71,10 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-
-
+        databaseReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("Chats");
 
         profileImage = findViewById(R.id.profileImage);
         name = findViewById(R.id.actualName);
@@ -70,6 +84,21 @@ public class ChatActivity extends AppCompatActivity {
         messageEditText = findViewById(R.id.user_message);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        recyclerView = findViewById(R.id.chatRV);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        chatList = new ArrayList<>();
+
+
+
+
+
 
 
         Bundle extras = getIntent().getExtras();
@@ -136,7 +165,8 @@ public class ChatActivity extends AppCompatActivity {
 
                 userName.setText(user.getUsername());
                 name.setText(user.getName());
-                ReceiverUserId = user.getId();
+                //ReceiverUserId = user.getId();
+                retrieveMessages(firebaseUser.getUid(), ReceiverUserId);
 
 
             }
@@ -150,12 +180,53 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    private void retrieveMessages(String senderUserid, String receiverUserId) {
+
+        chatList =new ArrayList<>();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                chatList.clear();
+
+                for(DataSnapshot item: snapshot.getChildren()){
+
+                     Chat chat = item.getValue(Chat.class);
+
+                    if (chat.getSender().equals(senderUserid) && chat.getReceiver().equals(receiverUserId)){
+
+                            chatList.add(chat);
+                    }
+
+
+
+                }
+                chatsAdapter = new ChatsAdapter(getApplicationContext(), chatList);
+
+                recyclerView.setAdapter(chatsAdapter);
+                //chatsAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+
+    }
+
     private void sendMessage(String senderId, String receiverUserId, String message){
 
-        DatabaseReference databaseReference = FirebaseDatabase
-                .getInstance()
-                .getReference()
-                .child("Chats");
+        //DatabaseReference databaseReference = FirebaseDatabase
+               // .getInstance()
+               // .getReference()
+               // .child("Chats");
 
         // generate unique keys for chat
         String uniqueId = databaseReference.push().getKey();

@@ -10,6 +10,9 @@ private String url;
 private Boolean isSeen;
 
 
+
+    public Chat(){}
+
     public Chat(String sender, String receiver, String messageId, String message, String url, Boolean isseen) {
         this.sender = sender;
         this.receiver = receiver;

@@ -1,6 +1,7 @@
 package com.restapi.insta.Adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
     private Context mContext;
     private List<Chat> mChatList;
+    private FirebaseUser firebaseUser;
 
     public ChatsAdapter(Context mContext, List<Chat> mChatList) {
         this.mContext = mContext;
@@ -31,32 +33,57 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
-        return null;
+
+        View view;
+        // message_item_left  position == 0
+        // message_item_Right  position == 1
+        if(position == 0){
+
+            view = LayoutInflater.from(mContext).inflate(R.layout.message_right_item, parent, false);
+
+            return new ChatsAdapter.ViewHolder(view);
+
+        }else {
+
+            view = LayoutInflater.from(mContext).inflate(R.layout.message_left_item, parent, false);
+
+            return new ChatsAdapter.ViewHolder(view);
+        }
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        Chat chat = mChatList.get(position);
+
+        holder.message.setText(chat.getMessage());
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+
+
+        return mChatList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public CircleImageView imageProfile;
-        public TextView username;
-        public TextView fullname;
+
+
+        public TextView message;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            message = itemView.findViewById(R.id.show_text_message);
 
-            imageProfile = itemView.findViewById(R.id.image_profile);
-            username = itemView.findViewById(R.id.username);
-            fullname = itemView.findViewById(R.id.fullname);
+
 
         }
     }
