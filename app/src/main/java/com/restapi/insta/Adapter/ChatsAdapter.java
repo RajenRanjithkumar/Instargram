@@ -23,7 +23,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
     private Context mContext;
     private List<Chat> mChatList;
-    private FirebaseUser firebaseUser;
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     public ChatsAdapter(Context mContext, List<Chat> mChatList) {
         this.mContext = mContext;
@@ -34,21 +34,25 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
 
-        View view;
+
         // message_item_left  position == 0
         // message_item_Right  position == 1
         if(position == 0){
 
-            view = LayoutInflater.from(mContext).inflate(R.layout.message_right_item, parent, false);
+            View rView = LayoutInflater.from(mContext).inflate(R.layout.message_right_item, parent, false);
 
-            return new ChatsAdapter.ViewHolder(view);
+
+            return new ChatsAdapter.ViewHolder(rView);
+
 
         }else {
 
-            view = LayoutInflater.from(mContext).inflate(R.layout.message_left_item, parent, false);
+            View lView;
+            lView = LayoutInflater.from(mContext).inflate(R.layout.message_left_item, parent, false);
+            return new ChatsAdapter.ViewHolder(lView);
 
-            return new ChatsAdapter.ViewHolder(view);
         }
+
 
     }
 
@@ -70,6 +74,20 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
 
         return mChatList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        Chat chat = mChatList.get(position);
+
+        if(chat.getSender().equals(firebaseUser.getUid())){
+            return 0;
+
+        }else {
+            return 1;
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

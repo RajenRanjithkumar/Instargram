@@ -194,7 +194,8 @@ public class ChatActivity extends AppCompatActivity {
 
                      Chat chat = item.getValue(Chat.class);
 
-                    if (chat.getSender().equals(senderUserid) && chat.getReceiver().equals(receiverUserId)){
+                    if (chat.getSender().equals(senderUserid) && chat.getReceiver().equals(receiverUserId)
+                    || chat.getReceiver().equals(senderUserid) && chat.getSender().equals(ReceiverUserId)){
 
                             chatList.add(chat);
                     }
