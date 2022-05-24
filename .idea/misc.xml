@@ -32,6 +32,7 @@
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/insta_logo_white.xml" value="0.4015625" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/left_item.xml" value="0.2765" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/right_item.xml" value="0.2765" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/round_buttons.xml" value="0.194" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_chat.xml" value="0.33" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_comment.xml" value="0.3591485507246377" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_edit_profile.xml" value="0.33" />
@@ -45,6 +46,7 @@
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_register.xml" value="0.2513586956521739" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_search.xml" value="0.2128623188405797" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/comment_item.xml" value="0.22" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/custom_dialog.xml" value="0.33" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_notification.xml" value="0.3854166666666667" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_other_user.xml" value="0.3582427536231884" />

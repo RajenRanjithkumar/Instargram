@@ -15,7 +15,8 @@
         android:theme="@style/Theme.Insta">
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".SearchActivity"
             android:exported="false" />
