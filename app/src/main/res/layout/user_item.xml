@@ -17,13 +17,13 @@
 
     <TextView
         android:id="@+id/username"
+        style="@style/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:maxLines="1"
         android:text="Username"
-        style="@style/text"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/image_profile"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,10 +32,11 @@
         android:id="@+id/fullname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:maxLines="1"
         android:text="Fullname"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_profile"
         app:layout_constraintTop_toBottomOf="@+id/username"
@@ -46,11 +47,19 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#101010"
+        android:enabled="true"
         android:text="Follow"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="8sp"
+        android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/username"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintVertical_bias="0.48" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

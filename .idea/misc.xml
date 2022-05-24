@@ -23,6 +23,7 @@
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable-anydpi/ic_search.xml" value="0.4015625" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/chat_text_bg.xml" value="0.2765" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/circle_backgroung.xml" value="0.2765" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/follow_bt.xml" value="0.194" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.2765" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.3888888888888889" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/drawable/ic_instagram_wordmark_black_logo_wine.xml" value="0.4015625" />
@@ -59,11 +60,14 @@
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/post_item.xml" value="0.25" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/posts_item.xml" value="0.3555253623188406" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/tag_item.xml" value="0.3808876811594203" />
-        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/user_item.xml" value="0.25" />
+        <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/user_item.xml" value="0.33" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/layout/user_message_item.xml" value="0.2128623188405797" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/menu/bottom_menu.xml" value="0.3854166666666667" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3888888888888889" />
         <entry key="..\:/Users/ranji/AndroidStudioProjects/Insta/app/src/main/res/xml/attrs.xml" value="0.18743667679837892" />
+        <entry key="..\:/Users/ranji/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/btn_default_small.xml" value="0.194" />
+        <entry key="..\:/Users/ranji/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/btn_default_transparent.xml" value="0.194" />
+        <entry key="..\:/Users/ranji/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/button_inset.xml" value="0.194" />
       </map>
     </option>
   </component>

@@ -1,5 +1,6 @@
 package com.restapi.insta.Fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -72,12 +73,17 @@ public class HomeFragment extends Fragment {
         checkFollowingUsers();
 
 
+
         messageIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getContext(), R.anim.slide_in_right, R.anim.slide_out_left);
                 Intent intent = new Intent(getContext(), MessageActivity.class);
-                startActivity(intent);
+
+                startActivity(intent, options.toBundle());
+
+
                 //Toast.makeText(getContext(), "Working", Toast.LENGTH_SHORT).show();
 
 

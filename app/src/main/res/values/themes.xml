@@ -65,6 +65,14 @@
         <item name="android:src">@drawable/ic_save</item>
     </style>
 
+    <style name="buttonStyle" parent="@android:style/Widget.Button.Small">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+
 
 
 

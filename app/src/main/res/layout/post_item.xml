@@ -61,7 +61,7 @@
             android:id="@+id/postImage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_instagram_wordmark_black_logo_wine"
             app:layout_constraintDimensionRatio="1:1"
             tools:ignore="MissingConstraints" />
@@ -105,10 +105,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:theme="@style/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:theme="@style/save" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
