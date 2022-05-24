@@ -96,11 +96,6 @@ public class ChatActivity extends AppCompatActivity {
         chatList = new ArrayList<>();
 
 
-
-
-
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             ReceiverUserId = extras.getString("userId");

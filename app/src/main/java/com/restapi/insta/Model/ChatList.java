@@ -4,6 +4,8 @@ public class ChatList {
 
     private String id;
 
+    public ChatList(){}
+
     public ChatList(String id) {
         this.id = id;
     }

@@ -87,33 +87,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                //Toast.makeText(mContext, "delete", Toast.LENGTH_SHORT).show();
-                //List<String> options = Arrays.asList("Delete", "Cancel");
 
-
-                /*
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getRootView().getContext());
-                builder.setTitle("Delete message?");
-                builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        Toast.makeText(mContext, "yes", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-                builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                       dialogInterface.dismiss();
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-
-                dialog.show();
-                */
 
                 //custom dialog
                 Dialog dialog = new Dialog(view.getRootView().getContext());
