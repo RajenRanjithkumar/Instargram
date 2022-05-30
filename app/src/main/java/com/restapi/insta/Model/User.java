@@ -8,18 +8,20 @@ public class User {
     private String bio; //boi
     private String imageurl;
     private String id;
+    private Boolean online;
 
     public User() {
     }
 
 
-    public User(String name, String email, String username, String bio, String imageurl, String id) {
+    public User(String name, String email, String username, String bio, String imageurl, String id, Boolean online) {
         this.name = name;
         this.email = email;
         this.username = username;
         this.bio = bio;
         this.imageurl = imageurl;
         this.id = id;
+        this.online = online;
     }
 
     public String getName() {
@@ -68,5 +70,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
     }
 }

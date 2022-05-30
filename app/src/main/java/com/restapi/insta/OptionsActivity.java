@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
+import android.app.ActivityOptions;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,13 +57,21 @@ public class OptionsActivity extends AppCompatActivity {
 
 
 
-
-
-
-
             }
         });
 
 
+
+
+    }
+
+
+    @Override
+    public void finish() {
+        super.finish();
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_left, R.anim.slide_out_right);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("publisherId","fromOptionsAct");
+        startActivity(intent, options.toBundle());
     }
 }

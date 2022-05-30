@@ -113,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                 map.put("id", mAuth.getCurrentUser().getUid());
                 map.put("bio","Testing");
                 map.put("imageurl", "default");
+                map.put("online", true);
 
                 //add to DB
                 mRootref.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {

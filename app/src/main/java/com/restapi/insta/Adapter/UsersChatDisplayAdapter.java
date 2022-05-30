@@ -53,8 +53,18 @@ public class UsersChatDisplayAdapter extends RecyclerView.Adapter<UsersChatDispl
         User user = mUsers.get(position);
 
         holder.username.setText(user.getUsername());
-        holder.lastMessage.setText("Last msg");
+        //holder.lastMessage.setText("Last msg");
         Picasso.get().load(user.getImageurl()).placeholder(R.mipmap.ic_launcher).into(holder.imageProfile);
+
+        if (user.getOnline()){
+            holder.onlineIcon.setVisibility(View.VISIBLE);
+
+        }else {
+            holder.onlineIcon.setVisibility(View.VISIBLE);
+            holder.onlineIcon.setImageResource(android.R.color.darker_gray);
+
+        }
+
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -134,12 +144,14 @@ public class UsersChatDisplayAdapter extends RecyclerView.Adapter<UsersChatDispl
         public CircleImageView imageProfile;
         public TextView username;
         public TextView lastMessage;
+        public CircleImageView onlineIcon;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageProfile = itemView.findViewById(R.id.image_profile);
+            onlineIcon = itemView.findViewById(R.id.onlineIcon);
             username = itemView.findViewById(R.id.username);
             lastMessage = itemView.findViewById(R.id.fullname);
         }

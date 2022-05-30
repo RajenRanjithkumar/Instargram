@@ -25,6 +25,7 @@ import com.restapi.insta.Model.ChatList;
 import com.restapi.insta.Model.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
@@ -36,6 +37,8 @@ public class MessageActivity extends AppCompatActivity {
     private List<ChatList> mUserChatList;
     private List<User> mUsers;
     private FirebaseUser firebaseUser;
+
+    private OffineDetector offineDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,8 @@ public class MessageActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        offineDetector = new OffineDetector();
 
         usersRV = findViewById(R.id.chatListRV);
         usersRV.setHasFixedSize(true);
@@ -158,6 +163,24 @@ public class MessageActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent, options.toBundle());
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        offineDetector.updateStatus(true, firebaseUser);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        offineDetector.updateStatus(false, firebaseUser);
+
+    }
+
+
+
 
 
 }

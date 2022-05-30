@@ -11,22 +11,31 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.restapi.insta.Fragments.HomeFragment;
 import com.restapi.insta.Fragments.NotificationFragment;
 import com.restapi.insta.Fragments.ProfileFragment;
 import com.restapi.insta.Fragments.SerachFragment;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private Fragment selectorFragment;
     private FirebaseUser currentFirebaseUser;
+    private OffineDetector obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+         obj = new OffineDetector();
+
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -74,9 +83,13 @@ public class MainActivity extends AppCompatActivity {
             // how we pass values from activities to fragments
 
             String profileId = intent.getString("publisherId");
-            getSharedPreferences("Profile", MODE_PRIVATE).edit().putString("publisherId", profileId).apply();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-            bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+
+            if(!profileId.isEmpty()){
+                getSharedPreferences("Profile", MODE_PRIVATE).edit().putString("publisherId", profileId).apply();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+            }
+
 
         }else {
 
@@ -88,6 +101,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        obj.updateStatus(true, currentFirebaseUser);
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        obj.updateStatus(false, currentFirebaseUser);
+
+    }
+
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -95,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
-
 
 
     }

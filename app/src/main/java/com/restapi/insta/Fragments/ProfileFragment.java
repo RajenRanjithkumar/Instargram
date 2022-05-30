@@ -1,5 +1,6 @@
 package com.restapi.insta.Fragments;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -97,13 +98,15 @@ public class ProfileFragment extends Fragment {
 
 
 
-
+        profileId = firebaseUser.getUid();
+        data = "none";
         //Toast.makeText(getContext(), "current user ID:\n"+data, Toast.LENGTH_SHORT).show();
 
-        if (data.equals("none"))
+
+        //Changed this
+        /*if (data.equals("none"))
         {
-            profileId = firebaseUser.getUid();
-            data = "none";
+
 
         }
         else {
@@ -111,7 +114,7 @@ public class ProfileFragment extends Fragment {
             profileId = data;
             data = "none";
 
-        }
+        }*/
 
 
 
@@ -293,8 +296,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getContext(), R.anim.slide_in_right, R.anim.slide_out_left);
                 Intent intent = new Intent(getContext(), OptionsActivity.class);
-                startActivity(intent);
+                startActivity(intent, options.toBundle());
 
             }
         });
