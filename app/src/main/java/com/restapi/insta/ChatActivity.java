@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ChatsAdapter chatsAdapter;
     private List<Chat> chatList;
+    private DatabaseHelper databaseHelper;
 
 
     @Override
@@ -69,6 +70,8 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        databaseHelper = new DatabaseHelper(this);
 
 
         databaseReference = FirebaseDatabase
@@ -292,7 +295,34 @@ public class ChatActivity extends AppCompatActivity {
                 });
 
 
+        storeChatToSql(map);
 
+
+    }
+
+    private void storeChatToSql(HashMap<String, Object> map) {
+
+        Chat chat = new Chat();
+
+        chat.setMessageId((String) map.get("messageId"));
+        chat.setSender((String) map.get("sender"));
+        chat.setReceiver((String) map.get("receiver"));
+        chat.setMessage((String) map.get("message"));
+        chat.setUrl((String) map.get("url"));
+        chat.setIsSeen((Boolean) map.get("isSeen"));
+
+        try {
+
+            databaseHelper.storeChat(chat);
+
+
+
+
+
+        }
+        catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
 
     }
