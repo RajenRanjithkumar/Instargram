@@ -53,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ChatsAdapter chatsAdapter;
     private List<Chat> chatList;
-    private DatabaseHelper databaseHelper;
+    public DatabaseHelper databaseHelper;
 
 
     @Override
@@ -72,6 +72,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         databaseHelper = new DatabaseHelper(this);
+
 
 
         databaseReference = FirebaseDatabase
@@ -109,6 +110,7 @@ public class ChatActivity extends AppCompatActivity {
         databaseRef = FirebaseDatabase.getInstance().getReference().child("Users").child(ReceiverUserId);
 
         userInfo();
+        fetchMessagesfromSQlite();
 
         sendImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +133,10 @@ public class ChatActivity extends AppCompatActivity {
                 }else {
 
                     sendMessage(firebaseUser.getUid(), ReceiverUserId, message);
+
+
+
+
                     messageEditText.setText("");
 
                 }
@@ -178,10 +184,12 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    //this fun stores all the messages in the sqLite
     private void retrieveMessages(String senderUserid, String receiverUserId) {
 
-        chatList =new ArrayList<>();
 
+
+        //ref to chats branch
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -195,16 +203,17 @@ public class ChatActivity extends AppCompatActivity {
                     if (chat.getSender().equals(senderUserid) && chat.getReceiver().equals(receiverUserId)
                     || chat.getReceiver().equals(senderUserid) && chat.getSender().equals(ReceiverUserId)){
 
-                            chatList.add(chat);
+                        //store to SqLite
+                        databaseHelper.storeChat(chat);
+                        databaseReference.child(chat.getMessageId()).removeValue();
+                        //chatList.add(chat);
                     }
 
-
-
                 }
-                chatsAdapter = new ChatsAdapter(getApplicationContext(), chatList);
 
-                recyclerView.setAdapter(chatsAdapter);
-                //chatsAdapter.notifyDataSetChanged();
+
+                fetchMessagesfromSQlite();
+
 
             }
 
@@ -216,6 +225,24 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+
+
+    }
+
+    private void fetchMessagesfromSQlite() {
+
+        //chatList =new ArrayList<>();
+        //chatList = databaseHelper.getUsersChats();
+        chatsAdapter = new ChatsAdapter(getApplicationContext(), databaseHelper.getUsersChats());
+
+        recyclerView.setAdapter(chatsAdapter);
+        //chatsAdapter.notifyDataSetChanged();
 
 
     }
@@ -231,6 +258,7 @@ public class ChatActivity extends AppCompatActivity {
         String uniqueId = databaseReference.push().getKey();
 
         HashMap<String, Object> map = new HashMap<>();
+        
 
         map.put("messageId", uniqueId);
         map.put("sender", senderId);
@@ -239,6 +267,9 @@ public class ChatActivity extends AppCompatActivity {
         map.put("url", "yet to implement");
         map.put("isSeen", false);
 
+        storeChatToSql(map);
+
+        //send chat to firebase
         databaseReference
                 .child(uniqueId)
                 .setValue(map)
@@ -274,6 +305,7 @@ public class ChatActivity extends AppCompatActivity {
                                     chatListReceiverRef.child("id").setValue(firebaseUser.getUid());
 
 
+
                                 }
 
 
@@ -295,7 +327,8 @@ public class ChatActivity extends AppCompatActivity {
                 });
 
 
-        storeChatToSql(map);
+
+
 
 
     }
@@ -314,10 +347,6 @@ public class ChatActivity extends AppCompatActivity {
         try {
 
             databaseHelper.storeChat(chat);
-
-
-
-
 
         }
         catch (Exception e) {

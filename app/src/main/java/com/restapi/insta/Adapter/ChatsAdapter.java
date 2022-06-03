@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.restapi.insta.ChatActivity;
+import com.restapi.insta.DatabaseHelper;
 import com.restapi.insta.Model.Chat;
 import com.restapi.insta.R;
 
@@ -104,7 +105,8 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
                     @Override
                     public void onClick(View view) {
 
-                        deleteMessage(holder, holder.getAdapterPosition());
+                        //deleteMessage(holder, holder.getAdapterPosition());
+                        deleteMessageFromSql(holder, holder.getAdapterPosition());
                         dialog.dismiss();
 
 
@@ -137,6 +139,19 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
     }
 
+    private void deleteMessageFromSql(ViewHolder holder, int adapterPosition){
+
+        String messageId = mChatList.get(adapterPosition).getMessageId();
+        DatabaseHelper databaseHelper = new DatabaseHelper(mContext);
+        databaseHelper.deleteMessage(messageId);
+        notifyDataSetChanged();
+
+
+    }
+
+
+
+    // use this for delete for everyone feature
     private void deleteMessage(ViewHolder holder, int adapterPosition) {
 
         databaseReference.child("Chats")
