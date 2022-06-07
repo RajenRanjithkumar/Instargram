@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -54,6 +55,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatsAdapter chatsAdapter;
     private List<Chat> chatList;
     public DatabaseHelper databaseHelper;
+    private OffineDetector offineDetector;
 
 
     @Override
@@ -79,6 +81,8 @@ public class ChatActivity extends AppCompatActivity {
                 .getInstance()
                 .getReference()
                 .child("Chats");
+
+        offineDetector = new OffineDetector();
 
         profileImage = findViewById(R.id.profileImage);
         name = findViewById(R.id.actualName);
@@ -112,6 +116,9 @@ public class ChatActivity extends AppCompatActivity {
         userInfo();
         fetchMessagesfromSQlite();
 
+
+
+
         sendImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,6 +141,13 @@ public class ChatActivity extends AppCompatActivity {
 
                     sendMessage(firebaseUser.getUid(), ReceiverUserId, message);
 
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            deleteChatsFromServer(firebaseUser.getUid(), ReceiverUserId);
+                        }
+                    }, 1000);
+
 
 
 
@@ -148,6 +162,8 @@ public class ChatActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void userInfo() {
 
@@ -173,6 +189,9 @@ public class ChatActivity extends AppCompatActivity {
                 retrieveMessages(firebaseUser.getUid(), ReceiverUserId);
 
 
+
+
+
             }
 
             @Override
@@ -183,6 +202,45 @@ public class ChatActivity extends AppCompatActivity {
 
 
     }
+
+    private void deleteChatsFromServer(String senderUserid, String receiverUserId) {
+
+        //ref to chats branch
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                chatList.clear();
+
+                for(DataSnapshot item: snapshot.getChildren()){
+
+                    Chat chat = item.getValue(Chat.class);
+
+                    if (chat.getSender().equals(senderUserid) && chat.getReceiver().equals(receiverUserId)
+                            ){
+
+
+                        if (chat.getMessageReceived()){
+                            databaseReference.child(chat.getMessageId()).removeValue();
+                        }
+
+
+                    }
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
 
     //this fun stores all the messages in the sqLite
     private void retrieveMessages(String senderUserid, String receiverUserId) {
@@ -200,14 +258,30 @@ public class ChatActivity extends AppCompatActivity {
 
                      Chat chat = item.getValue(Chat.class);
 
-                    if (chat.getSender().equals(senderUserid) && chat.getReceiver().equals(receiverUserId)
-                    || chat.getReceiver().equals(senderUserid) && chat.getSender().equals(ReceiverUserId)){
+
+                    if (chat.getSender().equals(senderUserid) && chat.getReceiver().equals(receiverUserId))
+                    {
+
 
                         //store to SqLite
                         databaseHelper.storeChat(chat);
-                        databaseReference.child(chat.getMessageId()).removeValue();
+
+
+
                         //chatList.add(chat);
                     }
+                    if (chat.getReceiver().equals(senderUserid) && chat.getSender().equals(ReceiverUserId)){
+
+                        databaseHelper.storeChat(chat);
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("messageReceived", true);
+                        databaseReference.child(chat.getMessageId()).updateChildren(map);
+
+
+
+                    }
+
+
 
                 }
 
@@ -225,15 +299,9 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
     }
+
+
 
     private void fetchMessagesfromSQlite() {
 
@@ -265,7 +333,9 @@ public class ChatActivity extends AppCompatActivity {
         map.put("receiver", receiverUserId);
         map.put("message", message);
         map.put("url", "yet to implement");
+        map.put("lastMessage", "lastmessage");
         map.put("isSeen", false);
+        map.put("messageReceived", false);
 
         storeChatToSql(map);
 
@@ -355,6 +425,23 @@ public class ChatActivity extends AppCompatActivity {
 
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        offineDetector.updateStatus(true, firebaseUser);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        offineDetector.updateStatus(false, firebaseUser);
+
+    }
+
+
 
 
 }

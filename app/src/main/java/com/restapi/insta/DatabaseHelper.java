@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static int DATABASE_VERSION = 1;
 
-    private static String createTableQuery = "create table chatInfo (isSeen TEXT" + ",message TEXT" + ",messageId TEXT UNIQUE" + ",receiver TEXT" + ",sender TEXT" + ",url TEXT)";
+    private static String createTableQuery = "create table chatInfo (isSeen TEXT" + ",message TEXT" + ",messageId TEXT UNIQUE" + ",receiver TEXT" + ",sender TEXT" + ",url TEXT" + ",lastMessage TEXT" + ",messageReceived TEXT)";
 
 
     public DatabaseHelper(Context context) {
@@ -64,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             objectContentValues.put("receiver", chat.getReceiver());
             objectContentValues.put("sender", chat.getSender());
             objectContentValues.put("url", chat.getUrl());
+            objectContentValues.put("lastMessage", chat.getLastMessage());
 
             long checkQuery = sqLiteDatabase.insertWithOnConflict("chatInfo", null, objectContentValues, SQLiteDatabase.CONFLICT_REPLACE);
 
@@ -109,6 +110,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String Receiver = cursor.getString(3);
                     String Sender = cursor.getString(4);
                     String url = cursor.getString(5);
+                    String lastMessage = cursor.getString(6);
+                    Boolean messageReceived = Boolean.valueOf(cursor.getString(7));
 
                     /*Chat chat = new Chat();
                     chat.setIsSeen(Boolean.valueOf((cursor.getString(0))));
@@ -118,7 +121,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     chat.setSender(cursor.getString(4));
                     chat.setUrl(cursor.getString(6));*/
 
-                    chats.add(new Chat(Sender, Receiver, msgId, message, url, isSeen));
+                    chats.add(new Chat(Sender, Receiver, msgId, message, lastMessage, url, isSeen, messageReceived));
 
 
                 }

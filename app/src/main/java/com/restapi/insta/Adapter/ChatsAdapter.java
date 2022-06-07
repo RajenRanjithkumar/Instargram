@@ -133,10 +133,6 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
 
 
-
-
-
-
     }
 
     private void deleteMessageFromSql(ViewHolder holder, int adapterPosition){

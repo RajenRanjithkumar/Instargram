@@ -6,22 +6,25 @@ private String sender;
 private String receiver;
 private String messageId;
 private String message;
+private String lastMessage;
 private String url;
 private Boolean isSeen;
+private Boolean messageReceived;
 
 
 
     public Chat(){}
 
-    public Chat(String sender, String receiver, String messageId, String message, String url, Boolean isseen) {
+    public Chat(String sender, String receiver, String messageId, String message, String lastMessage, String url, Boolean isSeen, Boolean messageReceived) {
         this.sender = sender;
         this.receiver = receiver;
         this.messageId = messageId;
         this.message = message;
+        this.lastMessage = lastMessage;
         this.url = url;
-        this.isSeen = isseen;
+        this.isSeen = isSeen;
+        this.messageReceived = messageReceived;
     }
-
 
     public String getSender() {
         return sender;
@@ -55,6 +58,14 @@ private Boolean isSeen;
         this.message = message;
     }
 
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -67,7 +78,15 @@ private Boolean isSeen;
         return isSeen;
     }
 
-    public void setIsSeen(Boolean isSeen) {
-        this.isSeen = isSeen;
+    public void setIsSeen(Boolean seen) {
+        isSeen = seen;
+    }
+
+    public Boolean getMessageReceived() {
+        return messageReceived;
+    }
+
+    public void setMessageReceived(Boolean messageReceived) {
+        this.messageReceived = messageReceived;
     }
 }

@@ -79,7 +79,7 @@ public class UsersChatDisplayAdapter extends RecyclerView.Adapter<UsersChatDispl
             }
         });
 
-        getLastMessage(user.getId(), holder.lastMessage);
+        //getLastMessage(user.getId(), holder.lastMessage);
 
 
 
@@ -101,6 +101,8 @@ public class UsersChatDisplayAdapter extends RecyclerView.Adapter<UsersChatDispl
                     Chat chat = dataSnapshot.getValue(Chat.class);
 
                     assert firebaseUser != null;
+                    //changed
+                    //if (!firebaseUser.getUid().isEmpty() && !chat.getMessage().isEmpty()){
                     if (!firebaseUser.getUid().isEmpty() && !chat.getMessage().isEmpty()){
 
                         if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(chatUserId)
